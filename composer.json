@@ -12,11 +12,15 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0"
+        "php": "7.1.*",
+        "nesbot/carbon": "^1.22"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "7.0.*"
     },
     "autoload": {
         "psr-4": {
-            "Solaris\\Pupil\\": "src"
+            "Solaris\\Pupil\\": "src/Solaris/Pupil/"
         }
     }
 }
