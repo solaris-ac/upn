@@ -1,31 +1,34 @@
 <?php
 
-use Solaris\Pupil\Upn;
 use PHPUnit\Framework\TestCase;
+use Solaris\Pupil\Upn;
+use \Carbon\Carbon;
 
 class UpnTest extends TestCase
 {
-    public function testConcatenateNumber()
+    public $upn;
+
+    public function setUp()
     {
-        $upn = new Upn();
-        $upn->laNumber = 373;
-        $upn->dfeEstablishmentNumber = 3402;
-        $upn->yearOfAllocation = 96;
-        $upn->serialNumber = 1;
-        $this->assertEquals($upn->generate(), 'V373340296001');
+        $this->upn = new Upn(001, 0203, 001);
     }
 
-    public function testCanSetRealProperty()
+    public function tearDown()
     {
-        $upn = new Upn();
-        $upn->laNumber = 123;
-        $this->assertEquals($upn->laNumber, 123);
+        $this->upn = null;
     }
 
-    public function testCannotSetFalseProperty()
+    public function testLeadingZerosAreAdded()
     {
-        $upn = new Upn();
-        $upn->falseProperty = 123;
-        $this->assertNotEquals($upn->falseProperty, 123);
+        $this->assertEquals($this->upn->laNumber, '001');
+        $this->assertEquals($this->upn->dfeEstablishmentNumber, '0503');
+        $this->assertEquals($this->upn->serialNumber, '001');
+    }
+
+    public function testNewUpnGeneratesCurrentYear()
+    {
+        $thisYear = Carbon::now();
+
+        $this->assertEquals($thisYear->format('y'), $this->upn->yearOfAllocation->format('y'));
     }
 }
